@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+
+{% block title %}Registro de Manutenção{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2>Registro de Manutenção</h2>
+
+    <button type="button" class="btn btn-primary mb-3" onclick="toggleForm()">Adicionar Manutenção</button>
+
+    <div id="formContainer" style="display:none;">
+        <form id="manutencaoForm" method="post" action="{{ url_for('adicionar_manutencao') }}">
+            <div class="form-group">
+                <label for="data">Data</label>
+                <input type="date" class="form-control" id="data" name="data" required>
+            </div>
+            <div class="form-group">
+                <label for="descricao">Descrição</label>
+                <textarea class="form-control" id="descricao" name="descricao" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="pecas">Peças</label>
+                <input type="text" class="form-control" id="pecas" name="pecas" required>
+            </div>
+            <div class="form-group">
+                <label for="responsavel">Responsável</label>
+                <input type="text" class="form-control" id="responsavel" name="responsavel" required>
+            </div>
+            <button type="submit" class="btn btn-success">Adicionar</button>
+        </form>
+    </div>
+
+    <table class="table table-dark table-striped mt-3">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Data</th>
+                <th>Descrição</th>
+                <th>Peças</th>
+                <th>Responsável</th>
+                <th>Status</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for manutencao in manutencoes %}
+            <tr>
+                <td>{{ manutencao.id }}</td>
+                <td>{{ manutencao.data|date_format }}</td>
+                <td>{{ manutencao.descricao }}</td>
+                <td>{{ manutencao.pecas }}</td>
+                <td>{{ manutencao.responsavel }}</td>
+                <td>{{ manutencao.status }}</td>
+                <td>
+                    <form method="post" action="{{ url_for('concluir_manutencao', id=manutencao.id) }}" style="display:inline;">
+                        <button type="submit" class="btn btn-primary">Concluir</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<script>
+function toggleForm() {
+    var formContainer = document.getElementById('formContainer');
+    if (formContainer.style.display === 'none') {
+        formContainer.style.display = 'block';
+    } else {
+        formContainer.style.display = 'none';
+    }
+}
+</script>
+{% endblock %}

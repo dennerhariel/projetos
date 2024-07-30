@@ -1,0 +1,154 @@
+{% extends "base.html" %}
+
+{% block title %}Controle de Estoque{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2>Controle de Estoque</h2>
+    <div class="search-bar mb-3">
+        <input type="text" id="search" class="form-control" placeholder="Pesquisar peça...">
+    </div>
+    
+    <!-- Botões para Entrada e Saída de Peças -->
+    <div>
+        <button type="button" class="btn btn-success" onclick="showAddItemForm()">Entrada de Peças</button>
+        <button type="button" class="btn btn-warning" onclick="showRemoveItemForm()">Saída de Peças</button>
+        <button type="button" class="btn btn-info" onclick="showImportForm()">Importar XML</button>
+    </div>
+    
+    <!-- Formulário de Entrada de Peças -->
+    <div id="addItemForm" style="display: none; margin-top: 20px;">
+        <h3>Entrada de Peças</h3>
+        <form id="entradaForm" method="post" action="{{ url_for('adicionar_item') }}">
+            <div class="form-group">
+                <label for="nome">Nome do Item</label>
+                <input type="text" class="form-control" id="nome" name="nome" required>
+            </div>
+            <div class="form-group">
+                <label for="quantidade">Quantidade</label>
+                <input type="number" class="form-control" id="quantidade" name="quantidade" required>
+            </div>
+            <button type="submit" class="btn btn-success">Entrada de Peças</button>
+        </form>
+    </div>
+
+    <!-- Formulário de Saída de Peças -->
+    <div id="removeItemForm" style="display: none; margin-top: 20px;">
+        <h3>Saída de Peças</h3>
+        <form id="saidaForm" method="post" action="{{ url_for('saida_pecas') }}">
+            <div class="form-group">
+                <label for="nome_saida">Nome do Item</label>
+                <input type="text" class="form-control" id="nome_saida" name="nome" required>
+            </div>
+            <div class="form-group">
+                <label for="quantidade_saida">Quantidade</label>
+                <input type="number" class="form-control" id="quantidade_saida" name="quantidade" required>
+            </div>
+            <button type="submit" class="btn btn-warning">Saída de Peças</button>
+        </form>
+    </div>
+
+    <!-- Formulário de Importação de XML -->
+    <div id="importForm" style="display: none; margin-top: 20px;">
+        <h3>Importar XML</h3>
+        <form id="importarXmlForm" method="post" action="{{ url_for('importar_xml') }}" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="xmlFile">Selecione o arquivo XML</label>
+                <input type="file" class="form-control" id="xmlFile" name="file" required accept=".xml">
+            </div>
+            <button type="submit" class="btn btn-info">Importar</button>
+        </form>
+    </div>
+
+    <!-- Tabela de Itens -->
+    <table class="table table-dark table-striped" style="margin-top: 20px;">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>Quantidade</th>
+            </tr>
+        </thead>
+        <tbody id="estoque-tbody">
+            {% for item in itens %}
+            <tr>
+                <td>{{ item.id }}</td>
+                <td>{{ item.nome }}</td>
+                <td>{{ item.quantidade }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<script>
+function showAddItemForm() {
+    document.getElementById('addItemForm').style.display = 'block';
+    document.getElementById('removeItemForm').style.display = 'none';
+    document.getElementById('importForm').style.display = 'none';
+}
+
+function showRemoveItemForm() {
+    document.getElementById('removeItemForm').style.display = 'block';
+    document.getElementById('addItemForm').style.display = 'none';
+    document.getElementById('importForm').style.display = 'none';
+}
+
+function showImportForm() {
+    document.getElementById('importForm').style.display = 'block';
+    document.getElementById('addItemForm').style.display = 'none';
+    document.getElementById('removeItemForm').style.display = 'none';
+}
+
+document.getElementById('search').addEventListener('input', function() {
+    const query = this.value.toLowerCase();
+    const rows = document.querySelectorAll('#estoque-tbody tr');
+    rows.forEach(row => {
+        const itemName = row.querySelector('td:nth-child(2)').innerText.toLowerCase();
+        if (itemName.includes(query)) {
+            row.style.display = '';
+        } else {
+            row.style.display = 'none';
+        }
+    });
+});
+
+document.getElementById('entradaForm').onsubmit = function(event) {
+    event.preventDefault();
+    submitForm('entradaForm');
+};
+
+document.getElementById('saidaForm').onsubmit = function(event) {
+    event.preventDefault();
+    submitForm('saidaForm');
+};
+
+document.getElementById('importarXmlForm').onsubmit = function(event) {
+    event.preventDefault();
+    if (confirm('Deseja realmente importar o arquivo ' + document.getElementById('xmlFile').files[0].name + '?')) {
+        submitForm('importarXmlForm');
+    }
+};
+
+function submitForm(formId) {
+    const form = document.getElementById(formId);
+    const formData = new FormData(form);
+    
+    fetch(form.action, {
+        method: form.method,
+        body: formData
+    }).then(response => {
+        if (response.ok) {
+            alert('Operação realizada com sucesso!');
+            form.reset();
+            location.reload();
+        } else {
+            alert('Erro ao realizar a operação.');
+        }
+    }).catch(error => {
+        console.error('Erro:', error);
+        alert('Erro ao realizar a operação.');
+    });
+}
+</script>
+{% endblock %}

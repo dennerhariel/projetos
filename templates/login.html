@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
+    <title>Login</title>
+</head>
+<body>
+    <div class="login-card">
+        <h2>Login</h2>
+        <h3>Insira suas credenciais</h3>
+        <form class="login-form" action="{{ url_for('login') }}" method="post">
+            <input type="text" placeholder="Usuário" name="username" required>
+            <input type="password" placeholder="Senha" name="password" required>
+            <a href="{{ url_for('recuperar_senha') }}">Esqueceu sua senha?</a>
+            <button type="submit">Login</button>
+        </form>
+        <p>{{ msg }}</p>
+        <p>Ainda não tem uma conta? <a href="{{ url_for('registro') }}">Crie uma conta</a></p>
+    </div>
+</body>
+</html>

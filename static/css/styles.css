@@ -1,0 +1,228 @@
+* {
+    box-sizing: border-box;
+}
+
+:root {
+    --color-highlight: #e66022;
+    --color-background: #2a2733;
+    --color-text: #ffffff;
+    --color-secondary-text: rgba(255, 255, 255, 0.7);
+    --color-accent: #ffb84d;
+    --color-button-hover: #ff8c1a;
+    --color-card-bg: #3e3b47;
+}
+
+body {
+    margin: 0;
+    background: var(--color-background);
+    color: var(--color-text);
+    height: 100vh;
+    font-family: "Poppins", sans-serif;
+}
+
+.sidebar {
+    overflow: hidden;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Adiciona espaçamento entre as seções */
+    width: 64px;
+    background: var(--color-highlight);
+    transition: width 0.4s, background 0.4s;
+}
+
+.sidebar:hover {
+    width: 260px;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 80px;
+    padding: 0 8px;
+    background: var(--color-highlight);
+}
+
+.header img {
+    height: 40px;
+    margin-left: 14px;
+}
+
+.main-nav {
+    flex-grow: 1; /* Faz com que a navegação principal ocupe o espaço disponível */
+}
+
+.sidebar nav {
+    padding: 0 8px;
+}
+
+.sidebar a {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    height: 44px;
+    width: 100%;
+    border-radius: 6px;
+    font-size: 16px;
+    padding: 0 16px;
+    cursor: pointer;
+    color: var(--color-text);
+    text-decoration: none;
+    transition: background 0.2s, color 0.2s;
+}
+
+.sidebar a i {
+    margin-right: 8px;
+    font-size: 20px;
+}
+
+.sidebar a:hover {
+    background: var(--color-button-hover);
+    color: white;
+}
+
+.sidebar a p {
+    opacity: 0;
+    margin: 0;
+    white-space: nowrap;
+    transition: opacity 0.2s, left 0.2s;
+    position: absolute;
+    left: 72px;
+}
+
+.sidebar:hover a p {
+    opacity: 1;
+    left: 64px;
+}
+
+.bottom-nav {
+    padding: 0 8px;
+    margin-bottom: 20px; /* Ajuste o valor conforme necessário */
+}
+
+main {
+    margin-left: 64px;
+    padding: 20px;
+    transition: margin-left 0.4s;
+}
+
+.sidebar:hover + main {
+    margin-left: 240px;
+}
+
+.btn {
+    background-color: var(--color-highlight);
+    color: var(--color-text);
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.btn:hover {
+    background-color: var(--color-button-hover);
+}
+
+.btn-secondary {
+    background-color: var(--color-accent);
+    color: var(--color-background);
+}
+
+.btn-secondary:hover {
+    background-color: var(--color-button-hover);
+    color: var(--color-text);
+}
+
+.back-button {
+    margin-bottom: 20px;
+}
+
+.container {
+    background: var(--color-card-bg);
+    padding: 20px;
+    border-radius: 8px;
+}
+
+h2, p {
+    color: var(--color-text);
+}
+
+.table {
+    background-color: var(--color-card-bg);
+    color: var(--color-text);
+}
+
+.table th, .table td {
+    border-color: var(--color-secondary-text);
+}
+
+.table th {
+    color: var(--color-accent);
+}
+
+.search-bar input {
+    background-color: #2d2f31;
+    color: #fff;
+    border: none;
+}
+
+.search-bar input::placeholder {
+    color: #aaa;
+}
+
+.alert {
+    padding: 20px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+}
+
+.alert-heading {
+    font-size: 1.5em;
+}
+
+.alert-warning {
+    background-color: #fff3cd;
+    color: #856404;
+}
+
+.alert-info {
+    background-color: #d1ecf1;
+    color: #0c5460;
+}
+
+.alert-primary {
+    background-color: #cce5ff;
+    color: #004085;
+}
+
+.form-label {
+    color: #495057; /* Ajuste a cor conforme necessário */
+}
+
+.form-control-file {
+    width: auto; /* Ajusta a largura do botão de upload */
+}
+
+/* Ajusta a cor do texto ao lado do botão de upload */
+input[type="file"]::file-selector-button {
+    color: #495057;
+}
+
+input[type="file"] {
+    color: #495057;
+}
+
+input[type="file"] {
+    color: #495057;
+    background-color: #f8f9fa;
+    border: 1px solid #ced4da;
+    padding: .375rem .75rem;
+    border-radius: .25rem;
+}

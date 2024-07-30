@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2>Dashboard</h2>
+    <div class="alert alert-warning">
+        <h4>Peças com Baixo Estoque</h4>
+        <ul>
+            {% for peca in pecas %}
+            <li>{{ peca.nome }} - Quantidade: {{ peca.quantidade }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div class="alert alert-info">
+        <h4>Manutenções Pendentes</h4>
+        <ul>
+            {% for manutencao in manutencoes_pendentes %}
+            <li>{{ manutencao.descricao }} - Data: {{ manutencao.data|date_format }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div class="alert alert-primary">
+        <h4>Manutenções em Andamento</h4>
+        <ul>
+            {% for manutencao in manutencoes_andamento %}
+            <li>{{ manutencao.descricao }} - Data: {{ manutencao.data|date_format }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+{% endblock %}

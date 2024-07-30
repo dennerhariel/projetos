@@ -1,0 +1,25 @@
+CREATE DATABASE CST;
+
+USE CST;
+
+CREATE TABLE accounts (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(50) NOT NULL,
+    password VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE estoque (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL,
+    quantidade INT NOT NULL
+);
+
+CREATE TABLE manutencao (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    data DATE NOT NULL,
+    descricao TEXT NOT NULL,
+    pecas TEXT NOT NULL,
+    responsavel VARCHAR(100) NOT NULL
+);
+
+

@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block title %}Suporte{% endblock %}
+
+{% block content %}
+    <div class="container mt-5">
+        <header class="mb-4 text-center">
+            <h1>Suporte</h1>
+            <p>Preencha o formulário abaixo para enviar uma solicitação de suporte.</p>
+        </header>
+        <main>
+            <form method="POST" action="{{ url_for('suporte') }}" enctype="multipart/form-data" class="bg-light p-5 rounded shadow-sm">
+                <div class="form-group">
+                    <label for="title">Título:</label>
+                    <input type="text" id="title" name="title" maxlength="50" class="form-control" required>
+                    <small id="title-counter" class="form-text text-muted">0/50</small>
+                </div>
+                
+                <div class="form-group">
+                    <label for="description">Descrição:</label>
+                    <textarea id="description" name="description" maxlength="2000" class="form-control" rows="5" required></textarea>
+                    <small id="description-counter" class="form-text text-muted">0/2000</small>
+                </div>
+                
+                <div class="form-group">
+                    <label for="file" class="form-label">Importar arquivo (png, jpeg, jpg):</label>
+                    <input type="file" id="file" name="file" class="form-control-file">
+                </div>
+                
+                <button type="submit" class="btn btn-primary btn-block">Enviar</button>
+            </form>
+        </main>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const titleInput = document.getElementById('title');
+            const titleCounter = document.getElementById('title-counter');
+            const descriptionInput = document.getElementById('description');
+            const descriptionCounter = document.getElementById('description-counter');
+            
+            function updateCounter(input, counter, maxLength) {
+                const length = input.value.length;
+                counter.textContent = `${length}/${maxLength}`;
+                if (length > maxLength) {
+                    counter.classList.add('text-danger');
+                } else {
+                    counter.classList.remove('text-danger');
+                }
+            }
+
+            titleInput.addEventListener('input', function() {
+                updateCounter(titleInput, titleCounter, 50);
+            });
+
+            descriptionInput.addEventListener('input', function() {
+                updateCounter(descriptionInput, descriptionCounter, 2000);
+            });
+        });
+    </script>
+{% endblock %}

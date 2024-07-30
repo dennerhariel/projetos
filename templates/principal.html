@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página Principal</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <h2>Bem-vindo ao Sistema de Manutenção e Controle de Estoque</h2>
+    <nav>
+        <ul>
+            <li><a href="{{ url_for('controle_estoque') }}">Controle de Estoque</a></li>
+            <li><a href="{{ url_for('registro_manutencao') }}">Registro de Manutenção</a></li>
+            <li><a href="{{ url_for('relatorios') }}">Relatórios</a></li>
+            <li><a href="{{ url_for('logout') }}">Logout</a></li>
+        </ul>
+    </nav>
+</body>
+</html>
